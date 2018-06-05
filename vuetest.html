@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<body>
+    
+    <div id ="app3">
+    <p v-if ="seen"> now you see me</p>
+    </div>    
+    <div id ="app7">
+        <ol>
+            <todo-item 
+                v-for ='item in groceryList'
+                v-bind:todo="item"
+                v-bind:key="item.id">
+            </todo-item>
+            
+        </ol>
+    </div>
+    
+    <div id ="example">
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+    </div>
+
+    <div id ="test">
+    <ul>
+        <li v-for ="product in products">
+              <input type ="number" v-model.number="product.quantity"> {{product.name}}
+                <span  v-if ="product.quantity ===0" >
+                    - OUT OF STOCK
+                </span>
+                <button @click="product.quantity+=1">
+                    Add
+                </button>
+                </li>
+                
+    </ul>
+    <h2>Total Inventory: {{ totalProducts }}</h2>
+    
+    </div>
+
+
+</body>
+
+
+<script>
+
+ const test = new Vue({
+     el :'#test',
+     data: {
+         products:[
+
+         ]
+     },
+     computed: {
+        totalProducts () {
+                    return this.products.reduce((sum, product ) => {
+                        return sum + product.quantity
+                    },0)
+            }
+     },
+     created(){
+         fetch('https://api.myjson.com/bins/74l63')
+         .then(response=> response.json() )
+         .then(json=>{
+             this.products =json.products
+         },0)
+     }
+})
+
+
+var vm  = new Vue({
+    el: '#example',
+    data: {
+        message: 'Hello'
+    },
+    computed: {
+        reversedMessage: function(){
+             return this.message.split('').reverse().join('')
+        }
+    }
+ 
+    
+})
+
+
+var app3 = new Vue({
+    el: '#app3',
+    data: {
+        seen: true
+    }
+})
+
+Vue.component('todo-item',{
+    props: ['todo'],
+    template: '<li>{{ todo.text }}</li>'
+})
+
+var app7 = new Vue({
+    el: '#app7',
+    data: {
+        groceryList: [
+            { id: 0, text: '蔬菜' },
+            { id: 1, text: '奶酪'},
+            { id: 2, text: 'other'}
+        ]
+    }
+})
+
+</script>
+</html>
