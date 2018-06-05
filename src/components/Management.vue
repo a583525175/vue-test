@@ -3,7 +3,7 @@
         <el-col :span="3" style="background-color: #def; min-height: calc(100vh - 10px);">
           <ul class="dib-wrap">
         <li v-for='(item, index) in menu' :key='index' :class='item.tag' class="line">
-          <router-link :to="item.link" class="active"  v-on:click.native="chooseMenu" >{{item.label}}</router-link>
+          <router-link :to="item.link" class="active"  v-on:click.native='isSubmitted = true' :class="{submit: isSubmitted }" >{{item.label}}</router-link>
         </li>
       </ul>
         </el-col>
@@ -32,6 +32,7 @@ export default {
   name: 'app',
   data () {
     return {
+      isSubmitted: false,
       menu: menu
     }
   }
@@ -46,10 +47,12 @@ export default {
 }
 .line{
   line-height:3;
-  color:#6959CD;
 }
 .dib-wrap > *{
  display: inline-block;
+}
+.submit{
+  color:#6959CD;
 }
 
 </style>
