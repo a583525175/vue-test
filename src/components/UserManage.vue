@@ -48,6 +48,14 @@
     </el-table-column>
   </el-table>
 </div>   
+  <div class="block">
+    <el-pagination
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="0">
+    </el-pagination>
+  </div>
 </div>
 </template>
 <script>
@@ -57,13 +65,14 @@ export default {
   data () {
     return {
       tableData: [],
-      input: ''
+      input: '',
+      total: ''
     }
   },
   mounted () {
     axios.get('/api/permitform').then(res => {
-      console.log(res)
       this.tableData = res.data.formdata
+      this.total = '9'
     })
   }
 }
@@ -85,5 +94,9 @@ export default {
 }
 .el-table thss{
     background-color:#F0F0F0;
+}
+.block{
+     position:fixed;
+     right: 4%;
 }
 </style>
