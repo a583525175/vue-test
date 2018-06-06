@@ -7,6 +7,7 @@ import Components from '@/components/Components'
 import MenuManage from '@/components/MenuManage'
 import RoleManage from '@/components/RoleManage'
 import UserManage from '@/components/UserManage'
+import NewBuilt from '@/components/NewBuilt'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
               path: 'userManage',
               name: 'UserManage',
               component: UserManage
+            },
+            {
+              path: 'newBuilt',
+              name: 'NewBuilt',
+              component: NewBuilt
             }
           ]
         },
