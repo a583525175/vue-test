@@ -50,9 +50,11 @@
       label="操作"
       width="380">
     <template slot-scope="scope">
+      <router-link to="/management/newBuilt">
       <el-button class="el-icon-edit"
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">&nbsp;编辑</el-button>
+         >&nbsp;编辑</el-button>
+          </router-link >
        <el-button class="el-icon-setting"
           size="mini"
           type="primary"
@@ -60,7 +62,7 @@
       <el-button class="el-icon-delete"
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="handleDelete(scope.$index, scope.row)">&nbsp;删除</el-button>
     </template>
     </el-table-column>
   </el-table>

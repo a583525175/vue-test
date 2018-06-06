@@ -5,7 +5,12 @@
        <router-link to="/management/userManage"> <el-button type="primary" size="medium" icon="el-icon-plus">返回</el-button></router-link>
   </div></el-col>
 </el-row>
-<div >
+<div class="title">
+    <h3>
+      新增用户
+    </h3>
+</div>
+<div>
 <el-form ref="form" :model="form" label-width="120px" class="blk">
   <el-form-item label="用户名">
     <el-input v-model="form.name"></el-input>
@@ -69,6 +74,9 @@
     position: fixed;
     top:20%;
     left:20%;
+}
+.title{
+  margin-left: 1em
 }
 </style>
 
