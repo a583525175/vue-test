@@ -13,7 +13,7 @@
 </el-row>
     <div class="dib">
       <el-table
-    :data="tableData"
+    :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
     border
     style="width: 100% " >
       <el-table-column
@@ -23,37 +23,57 @@
     <el-table-column
       prop="img"
       label="照片"
-      width="180">
+      width="130">
     </el-table-column>
     <el-table-column
       prop="nickname"
       label="昵称"
-      width="180">
+      width="250">
     </el-table-column>
     <el-table-column
       prop="username"
-      label="用户名">
+      label="用户名"
+      width="250">
     </el-table-column>
     <el-table-column
       prop="email"
-      label="邮箱">
+      label="邮箱"
+      width="250">
     </el-table-column>
     <el-table-column
       prop="status"
-      label="状态">
+      label="状态"
+      width="250">
     </el-table-column>
  <el-table-column
       prop="operations"
-      label="操作">
+      label="操作"
+      width="380">
+    <template slot-scope="scope">
+      <el-button class="el-icon-edit"
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">&nbsp;编辑</el-button>
+       <el-button class="el-icon-setting"
+          size="mini"
+          type="primary"
+          @click="handleDeploy(scope.$index, scope.row)">&nbsp;配置角色</el-button>
+      <el-button class="el-icon-delete"
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+    </template>
     </el-table-column>
   </el-table>
 </div>   
   <div class="block">
     <el-pagination
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 50, 100, 200]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="0">
+      :total="total">
     </el-pagination>
   </div>
 </div>
@@ -66,14 +86,24 @@ export default {
     return {
       tableData: [],
       input: '',
-      total: ''
+      total: '',
+      currentPage: 1,
+      pageSize: 10
     }
   },
   mounted () {
     axios.get('/api/permitform').then(res => {
       this.tableData = res.data.formdata
-      this.total = '9'
+      this.total = res.data.formdata.length
     })
+  },
+  methods: {
+    handleSizeChange (val) {
+      this.pageSize = val
+    },
+    handleCurrentChange (val) {
+      this.currentPage = val
+    }
   }
 }
 </script>
@@ -82,12 +112,12 @@ export default {
     margin: 10px;
 }
 .dic{
-    position:fixed;
-    right: 8%;
+    position: absolute;;
+    right: 200px;
 }
 .did{
-    position:fixed;
-    right: 3%;
+    position:absolute;
+    right: 100px;
 }
 .el-table .cell{
     color:black

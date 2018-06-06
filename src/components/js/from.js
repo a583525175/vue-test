@@ -12,7 +12,7 @@ const getMockString = (n = 8) => {
   return str
 }
 let data = []
-for (let i = 0; i < 9; i++) {
+for (let i = 0; i < 100; i++) {
   data.push({
     id: getMockString(),
     img: getMockString(),
