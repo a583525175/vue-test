@@ -50,15 +50,30 @@
       label="操作"
       width="380">
     <template slot-scope="scope">
-      <router-link to="/management/newBuilt">
-      <el-button class="el-icon-edit"
+      <router-link to="/management/UpdateUser">
+      <el-button class="el-icon-edit" @click="sendID(scope.row.id)"
           size="mini"
          >&nbsp;编辑</el-button>
           </router-link >
        <el-button class="el-icon-setting"
           size="mini"
           type="primary"
-          @click="handleDeploy(scope.$index, scope.row)">&nbsp;配置角色</el-button>
+          @click="dialogFormVisible = true">&nbsp;配置角色</el-button>
+          <el-dialog title="配置角色" :visible.sync="dialogFormVisible"  width="30%" hig >
+            <el-tree
+              :data="data2"
+              show-checkbox
+              node-key="id"
+              :default-expanded-keys="[2, 3]"
+              :default-checked-keys="[5]"
+              :props="defaultProps">
+          </el-tree>
+          <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+      </el-dialog>
+
       <el-button class="el-icon-delete"
           size="mini"
           type="danger"
@@ -72,7 +87,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 50, 100, 200]"
+      :page-sizes="[10]"
       :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -83,14 +98,37 @@
 <script>
 import axios from 'axios'
 import './js/from.js'
+import bus from './js/eventBus'
 export default {
   data () {
     return {
       tableData: [],
       input: '',
-      total: '',
+      total: 1,
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      dialogFormVisible: false,
+      count: 1,
+      active: true,
+      formLabelWidth: '120px',
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+      data2: [{
+        id: 1,
+        label: '超级管理员'
+      }, {
+        id: 2,
+        label: '主编',
+        children: [{
+          id: 5,
+          label: '编辑'
+        }, {
+          id: 6,
+          label: '校对'
+        }]
+      }]
     }
   },
   mounted () {
@@ -105,30 +143,40 @@ export default {
     },
     handleCurrentChange (val) {
       this.currentPage = val
+    },
+    sendID (id) {
+      bus.$emit('userDefinedEvent', id)
     }
   }
 }
 </script>
 <style>
-.dib{
-    margin: 10px;
+.dib {
+  margin: 10px;
 }
-.dic{
-    position: absolute;;
-    right: 200px;
+.dic {
+  position: absolute;
+  right: 200px;
 }
-.did{
-    position:absolute;
-    right: 100px;
+.did {
+  position: absolute;
+  right: 100px;
 }
-.el-table .cell{
-    color:black
+.el-table .cell {
+  color: black;
 }
-.el-table thss{
-    background-color:#F0F0F0;
+.el-table thss {
+  background-color: #f0f0f0;
 }
-.block{
-     position:fixed;
-     right: 4%;
+.block {
+  position: absolute;
+  right: 4%;
+}
+.el-dialog__body{
+  border-style: solid;
+  border-width: 1px;
+   width: 470px;
+  height: 200px;
+  margin: 50px
 }
 </style>

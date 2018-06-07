@@ -8,6 +8,7 @@ import MenuManage from '@/components/MenuManage'
 import RoleManage from '@/components/RoleManage'
 import UserManage from '@/components/UserManage'
 import NewBuilt from '@/components/NewBuilt'
+import UpdateUser from '@/components/UpdateUser'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
               path: 'newBuilt',
               name: 'NewBuilt',
               component: NewBuilt
+            },
+            {
+              path: 'updateUser',
+              name: 'UpdateUser',
+              component: UpdateUser
             }
           ]
         },

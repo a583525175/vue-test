@@ -1,0 +1,12 @@
+[
+    {"id":"1","img":"B","nickname":"范敏","username":"Brown","email":"k@122.com","status":"已激活"},
+    {"id":"2","img":"G","nickname":"陈洋","username":"Garcia","email":"k@122.com","status":"已激活"},
+    {"id":"3","img":"R","nickname":"顾平","username":"Rodriguez","email":"k@122.com","status":"已激活"},
+    {"id":"4","img":"W","nickname":"高霞","username":"Wilson","email":"k@122.com","status":"已激活"},
+    {"id":"5","img":"A","nickname":"曾桂英","username":"Allen","email":"k@122.com","status":"已激活"},
+    {"id":"6","img":"L","nickname":"江涛","username":"Lee","email":"k@122.com","status":"已激活"},
+    {"id":"7","img":"B","nickname":"汤杰","username":"Brown","email":"k@122.com","status":"已激活"},
+    {"id":"8","img":"G","nickname":"顾霞","username":"Clark","email":"k@122.com","status":"已激活"},
+    {"id":"9","img":"Y","nickname":"田磊","username":"Young","email":"k@122.com","status":"已激活"},
+    {"id":"10","img":"H","nickname":"曹明","username":"Hall","email":"k@122.com","status":"已激活"}
+]
