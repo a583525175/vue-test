@@ -48,48 +48,52 @@
 </template>
 <script>
   import bus from './js/eventBus'
+  import qs from 'qs'
 
   export default {
     data () {
       return {
         form: {
+          id: '',
           name: '',
           nickName: '',
           phoneNumber: '',
           email: '',
-          status: '2',
-          type: '2',
+          status: '',
+          type: '',
           desc: ''
         }
       }
     },
     mounted () {
-      this.form.name = bus.name
-      this.form.nickName = bus.nickName
-      this.form.phoneNumber = bus.phoneNumber
-      this.form.email = bus.email
-      this.form.status = bus.status
       bus.$on('userDefinedEvent', function (msg) {
         bus.id = msg
-        var appData = require('./js/data.json')
-        for (const obj of appData) {
-          if (obj.id === bus.id) {
-            bus.name = obj.username
-            bus.nickName = obj.nickname
-            bus.email = obj.email
-            console.log(obj.status)
-            if (obj.status === '已激活') {
-              bus.status = '1'
-            } else {
-              bus.status = '2'
-            }
-          }
-        }
+      })
+      var id = bus.id
+      this.axios.get('http://localhost:8890/api/user/findById', {params: {id: id}}).then(res => {
+        this.form.name = res.data.name
+        this.form.nickName = res.data.nickName
+        this.form.phoneNumber = res.data.phoneNumber
+        this.form.email = res.data.email
+        this.form.status = res.data.status + ''
+        this.form.type = res.data.type + ''
+        this.form.desc = res.data.desc
+        this.form.id = id
       })
     },
     methods: {
       onSubmit () {
-        console.log('submit!')
+        this.axios.put('http://localhost:8890/api/user/updateUser', qs.stringify(this.form)).then(res => {
+          if (res.data === 'OK') {
+            this.$message({
+              message: '修改成功!',
+              type: 'success'
+            })
+            this.$router.push('/management/userManage')
+          } else {
+            this.$message.error('修改失败!')
+          }
+        })
       }
     }
   }

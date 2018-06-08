@@ -40,13 +40,14 @@
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
     <el-form-item size="large">
-    <el-button type="primary" @click="onSubmit">立即创建</el-button>
+    <el-button type="primary" :plain="true"  @click="onSubmit">立即创建</el-button>
   </el-form-item>
 </el-form>
 </div>
   </div>
 </template>
 <script>
+  import qs from 'qs'
   export default {
     data () {
       return {
@@ -63,7 +64,17 @@
     },
     methods: {
       onSubmit () {
-        console.log('submit!')
+        this.axios.put('http://localhost:8890/api/addUser', qs.stringify(this.form)).then(res => {
+          if (res.data === 'OK') {
+            this.$message({
+              message: '创建成功!',
+              type: 'success'
+            })
+            this.$router.push('/management/userManage')
+          } else {
+            this.$message.error('新建失败!')
+          }
+        })
       }
     }
   }
@@ -71,7 +82,7 @@
 <style>
 .blk{
     width: 30%;
-    position: fixed;
+    position: absolute;
     top:20%;
     left:20%;
 }
